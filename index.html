@@ -8,10 +8,10 @@
 </head>
 <body>
     <header class="header">
-        <h2 class="scores" id="scores">View Highscores</h2>
-        <h2 class="timeleft" id="timeleft">Time: 60s</h2>
+        <h2 class="scores" id="highscore-page">View Highscores</h2>
+        <h2 class="timeleft" id="timeleft">Time: 60</h2>
     </header>
-<section class="starter"> 
+<section class="starter-page"> 
     
         <h3>Musical quiz challenge</h3>
         <p>Try to answer music related questions in given time. keep in mind every incorrect answer will shorten remaining time by ten seconds. Click start when you are ready! </p> 
@@ -19,17 +19,27 @@
         
 
 </section>
-<section class="hide" id="questions">
-    <p class="eachquestion"> heyyyy </p>
-    <div class="choice"> </div>
-
-
-</section>
-<section class="hide"> 
+<section id="quiz-page" class="hide">
+    <h1 id="question">question here</h1>
+    <div id="answer-buttons">
+        <button class="btn" id="answer1">Answer 1</button>
+        <button class="btn" id="answer2">Answer 2</button>
+        <button class="btn" id="answer3">Answer 3</button>
+        <button class="btn" id="answer4">Answer 4</button>
+    </div>
+    
+<section class="hide" id="score-page"> 
     <h2>Your final score is: </h2>
     <p>Please enter your name: <input type="text" id="name" />
     <button id="submit-score">Submit</button>
 </section>
+<section class="hide" id="highscore-page"> 
+    <P>Leaderboard</P>
+    <button class="mainpage">Go back</button>
+    <button class="clearscores">Clear scores</button>
+
+
+<script src="./Assets/script.js"></script> 
 </body>
 
 </html>
