@@ -11,45 +11,99 @@
 //* WHEN the game is over
 //* THEN I can save my initials and my score
 
-
-
-
 let timerEl = document.getElementById('timeleft')
 let startButton = document.getElementById('start-button')
 let quizPage = document.getElementById('quiz-page')
-let questionValue = document.getElementById('question')
+let mainPage = document.getElementById('starter-page')
+let answerButtons = document.getElementById('answer-buttons')
+let questionEl = document.getElementById('question')
+let answerBtn1 = document.getElementById('answer1');
+let answerBtn2 = document.getElementById('answer2');
+let answerBtn3 = document.getElementById('answer3');
+let answerBtn4 = document.getElementById('answer4');
+let check =  document.getElementById('correct-wrong')
+let questionIndex = 0
+let points = 0
+
+//* need to create function when user presses any button it shows correct or wrong and goes to next question
+
 
 let questions = [
     {
-        question: "Question 1 : George Harrison was member of which rock band?",
-        choices: ["a. Led zeppelin", "b. Pink floyd", "c. The beatles", "d. Rolling stones "],
-        correct: "c"
+        question: "George Harrison was member of which rock band?",
+        choices: ["A. Led zeppelin", "B. Pink floyd", "C. The beatles", "D. Rolling stones "],
+        correct: "C. The beatles"
     },
     {
-        question: "Question 2 : Who was the youngest member of Jackson 5?",
-        choices: ["a. Michael Jackson", "b. Randy Jackson", "c. Jermaine Jackson", "d. Jackie Jackson"],
-        correct: "a"
+        question: "Who was the youngest member of Jackson 5?",
+        choices: ["A. Michael Jackson", "B. Randy Jackson", "C. Jermaine Jackson", "D. Jackie Jackson"],
+        correct: "A. Michael Jackson"
     },
-];
-console.log(questions)
-startButton.addEventListener("click", function() {
-
-  countdown();
-
-} )
-function countdown() {
-    let timeLeft = 60;
-    const timeInterval = setInterval(function () {
-    if (timeLeft > 0) {
-
-        timerEl.textContent = `Time: ${timeLeft}`;
-        timeLeft--;
+    {
+        question: "What kind of instrument did Miles Davis play?",
+        choices: ["A. Trumpet", "b. Piano", "c. Guitar", "d. Drum "],
+        correct: "A. Trumpet"
+    },
+    {
+        question: "Who was the lead singer of Queen ?",
+        choices: ["A. John Stewart", "B. Freddie Mercury", "C. Elton John", "D. Ozzy Osbourne "],
+        correct: "B. Freddie Mercury"
+    }
     
-    } else {
+];
+
+
+function showQuestion () {
+    questionEl.textContent = questions[questionIndex].question
+    answerBtn1.textContent = questions[questionIndex].choices[0];
+    answerBtn2.textContent = questions[questionIndex].choices[1];
+    answerBtn3.textContent = questions[questionIndex].choices[2];
+    answerBtn4.textContent = questions[questionIndex].choices[3];
+}
+function checkAnswer(event) {
+    
+    if (event.target.matches("button") ) 
+    
+    {  
+    if (questions[questionIndex].correct === event.target.textContent) {
+        check.textContent = "that's right!";
+        points = points +1;
+
+    } else {timeLeft = timeLeft -5; 
+        check.textContent = "Wrong! correct answer is " + questions[questionIndex].correct}
+
+        console.log(points)       
+        showQuestion(questionIndex++)    
+}      
+} 
+
+answerButtons.addEventListener("click", checkAnswer);
+
+startButton.addEventListener("click", function() {
+    mainPage.style.display = "none"
+    quizPage.style.display = "flex"
+    countdown();
+    showQuestion();
+} )
+
+function scorePage() {
+    mainPage.style.display = "none"
+    quizPage.style.display = "none"
+    
+}
+
+let timeLeft = 40;
+function countdown() {
+
+    const timeInterval = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = "Time: " + timeLeft;
         
-        timerEl.textContent = 'Time: 0';
+    if (timeLeft <= 0) {
+        
         clearInterval(timeInterval);
-        quizfinish() //have to create
+        timerEl.textContent = "Time: 0"
+        
         
     }
     }, 1000);
