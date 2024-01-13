@@ -16,6 +16,7 @@ let startButton = document.getElementById('start-button')
 let quizPage = document.getElementById('quiz-page')
 let mainPage = document.getElementById('starter-page')
 let answerButtons = document.getElementById('answer-buttons')
+let quizEnd = document.getElementById('quizend-page')
 let questionEl = document.getElementById('question')
 let answerBtn1 = document.getElementById('answer1');
 let answerBtn2 = document.getElementById('answer2');
@@ -24,8 +25,6 @@ let answerBtn4 = document.getElementById('answer4');
 let check =  document.getElementById('correct-wrong')
 let questionIndex = 0
 let points = 0
-
-//* need to create function when user presses any button it shows correct or wrong and goes to next question
 
 
 let questions = [
@@ -48,8 +47,22 @@ let questions = [
         question: "Who was the lead singer of Queen ?",
         choices: ["A. John Stewart", "B. Freddie Mercury", "C. Elton John", "D. Ozzy Osbourne "],
         correct: "B. Freddie Mercury"
+    },
+    {
+        question: "How many strings are on a standart guitar ?",
+        choices: ["A. 3", "B. 4", "C. 5", "D. 6"],
+        correct: "D. 6"
+    },
+    {
+        question: "What genre of music is Herbie Hancock famous for ?",
+        choices: ["A. Pop", "B. Soul", "C. Jazz-Funk", "D. Rock "],
+        correct: "C. Jazz-Funk"
+    },
+    {
+        question: "Who was the lead singer of Queen ?",
+        choices: ["A. John Stewart", "B. Freddie Mercury", "C. Elton John", "D. Ozzy Osbourne "],
+        correct: "B. Freddie Mercury"
     }
-    
 ];
 
 
@@ -71,9 +84,17 @@ function checkAnswer(event) {
 
     } else {timeLeft = timeLeft -5; 
         check.textContent = "Wrong! correct answer is " + questions[questionIndex].correct}
-
-        console.log(points)       
-        showQuestion(questionIndex++)    
+    
+    
+        showQuestion(questionIndex++); 
+        
+        if (questionIndex +1 == questions.length) {
+            
+            scorePage();
+            //* saveScore();
+            timeLeft = 0
+        } 
+        console.log(points)
 }      
 } 
 
@@ -87,8 +108,13 @@ startButton.addEventListener("click", function() {
 } )
 
 function scorePage() {
+    
     mainPage.style.display = "none"
     quizPage.style.display = "none"
+    quizEnd.style.display = "flex"
+    quizEnd.children[0].textContent = 'Your final score is: ' + points
+    
+    
     
 }
 
@@ -103,6 +129,8 @@ function countdown() {
         
         clearInterval(timeInterval);
         timerEl.textContent = "Time: 0"
+        scorePage()
+        //* saveScore(); have to create
         
         
     }
