@@ -23,8 +23,24 @@ let answerBtn2 = document.getElementById('answer2');
 let answerBtn3 = document.getElementById('answer3');
 let answerBtn4 = document.getElementById('answer4');
 let check =  document.getElementById('correct-wrong')
+let scoresPage = document.getElementById('highscore-page')
+let viewScores = document.getElementById('view-scores')
 let questionIndex = 0
 let points = 0
+let submitScore = document.getElementById('submit-score')
+let highScoreList = document.getElementById('list')
+let initials =  document.getElementById('name')
+
+submitScore.addEventListener("click", topScoresPage )
+function topScoresPage()  {
+    quizEnd.style.display = "none"
+    scoresPage.style.display = "flex" 
+    highScoreList.textContent =initials.value + " - " + points + " points"
+
+} 
+
+
+
 
 
 let questions = [
@@ -64,7 +80,7 @@ let questions = [
         correct: "B. Freddie Mercury"
     }
 ];
-
+    
 
 function showQuestion () {
     questionEl.textContent = questions[questionIndex].question
