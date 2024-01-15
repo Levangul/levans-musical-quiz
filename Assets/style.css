@@ -28,13 +28,23 @@ margin-right:20%;}
     margin-right: 20%;
     
 }
+
+#answer-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 button {
+    
     background-color:rgb(26, 26, 188) ;
     color: white;
     font-size: 20px;
     margin-top: 40px;
     cursor: pointer;
+    
 }
+
 
 .hide {
     display: none;
@@ -42,6 +52,10 @@ button {
     align-items: center; 
     font-weight: bold;
     font-size: x-large;
+}
+
+li {
+    background-color: rgb(190, 211, 247)
 }
 
 @media screen and (max-width:762px) {header {
