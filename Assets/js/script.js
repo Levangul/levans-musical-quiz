@@ -155,32 +155,44 @@ submitScore.addEventListener("click", function() {
         alert("please enter your name") 
         return 
     } else {
-    topScoresPage() } 
-} )
-
-function topScoresPage()  {
-    quizEnd.style.display = "none"
-    scoresPage.style.display = "flex" 
-    //*local storage to keep information
-    let storedInfo = {
+        let storedInfo = {
         initials: initials.value,
         score: points}
+    
+    //* saving information on local storage
+    
+    localStorage.setItem("storedInfo", JSON.stringify(storedInfo))    
+    topScoresPage() } 
+    
+    
+} )
 
-    localStorage.setItem("storedInfo", JSON.stringify(storedInfo))
+
+function topScoresPage()  {
+    
+    quizEnd.style.display = "none"
+    scoresPage.style.display = "flex" 
+    //*take information from local storage
+    
+
     let renderInfo = JSON.parse(localStorage.getItem("storedInfo"))
-
+    
 
     //* creating list to hold information and show on the page
-    for (i = 0; i > initials.index; i++) {
-
+    
+    
+    if (renderInfo !== null) {
+    
     let li = document.createElement ("li")
     li.textContent = renderInfo.initials + " - " + renderInfo.score + "points"
 
     //* adding to parent element
 
-    topList.appendChild(li); } 
-    console.log(initials.index)
-    }
+    topList.appendChild(li); } }
+
+    
+
+
     
     
 
@@ -193,7 +205,7 @@ viewScores.addEventListener("click", function()  {
 
 clear.addEventListener("click", function () {
     localStorage.clear();
-    location.reload();
+    //* location.reload();
 });
 
 back.addEventListener("click", function() {
