@@ -15,13 +15,10 @@ let viewScores = document.getElementById('view-scores')
 let questionIndex = 0
 let points = 0
 let submitScore = document.getElementById('submit-score')
-let highScoreList = document.getElementById('list')
 let initials =  document.getElementById('name')
 let clear = document.getElementById('clearscores')
 let back = document.getElementById('go-back')
-let topList = document.getElementById('lists')
-
-
+let topList = document.getElementById('list')
 //* object with arrays of questions answers and correct answers
 
 let questions = [
@@ -155,13 +152,13 @@ submitScore.addEventListener("click", function() {
         alert("please enter your name") 
         return 
     } else {
-        let storedInfo = {
+        let highScores = {
         initials: initials.value,
         score: points}
     
     //* saving information on local storage
     
-    localStorage.setItem("storedInfo", JSON.stringify(storedInfo))    
+    localStorage.setItem("highScores", JSON.stringify(highScores))    
     topScoresPage() } 
     
     
@@ -175,20 +172,21 @@ function topScoresPage()  {
     //*take information from local storage
     
 
-    let renderInfo = JSON.parse(localStorage.getItem("storedInfo"))
+    let finalScoreList = JSON.parse(localStorage.getItem("highScores"))
     
 
     //* creating list to hold information and show on the page
     
     
-    if (renderInfo !== null) {
-    
     let li = document.createElement ("li")
-    li.textContent = renderInfo.initials + " - " + renderInfo.score + "points"
+    li.textContent = finalScoreList.initials + " - " + finalScoreList.score + "points"
 
     //* adding to parent element
 
-    topList.appendChild(li); } }
+
+    topList.appendChild(li); 
+} 
+
 
     
 
@@ -200,7 +198,7 @@ viewScores.addEventListener("click", function()  {
     mainPage.style.display = "none"
     quizPage.style.display = "none"
     quizEnd.style.display = "none"
-    topScoresPage()
+    scoresPage.style.display = "flex"
 } )
 
 clear.addEventListener("click", function () {
