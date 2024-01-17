@@ -153,7 +153,8 @@ submitScore.addEventListener("click", function () {
         alert("please enter your name")
         return
     } else {
-        highScores = JSON.parse(localStorage.getItem("highscores"))
+        highScores = JSON.parse(localStorage.getItem("highScores"))
+        console.log(highScores)
         if (highScores !== null) {
 
             let newScore = {
