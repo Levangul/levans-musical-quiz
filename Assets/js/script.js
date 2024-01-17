@@ -187,7 +187,6 @@ function topScoresPage() {
 
     quizEnd.style.display = "none"
     scoresPage.style.display = "flex"
-    //*grab information from local storage
     addList()
 
 
@@ -199,12 +198,9 @@ function addList() {
     let finalScore = JSON.parse(localStorage.getItem("highScores"))
 
 
-    //* creating list to hold information and show on the page
-
-
-
     if (finalScore !== null) {
         for (let i = 0; i < finalScore.length; i++) {
+            //* creating list to hold information and show on the page
             let list = document.createElement("li")
             list.textContent = finalScore[i].initials + " - " + finalScore[i].score + "points"
             //* adding to parent element
@@ -225,12 +221,17 @@ viewScores.addEventListener("click", function () {
     quizPage.style.display = "none"
     quizEnd.style.display = "none"
     scoresPage.style.display = "flex"
+    topScoresPage()
+    
+
 })
 
-clear.addEventListener("click", function () {
+clear.addEventListener("click", function () { 
+    
     localStorage.clear();
-    //* location.reload();
-    topScoresPage()
+    addList()
+    
+
 });
 
 back.addEventListener("click", function () {
