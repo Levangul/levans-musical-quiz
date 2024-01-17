@@ -9,13 +9,13 @@ let answerBtn1 = document.getElementById('answer1');
 let answerBtn2 = document.getElementById('answer2');
 let answerBtn3 = document.getElementById('answer3');
 let answerBtn4 = document.getElementById('answer4');
-let check =  document.getElementById('correct-wrong')
+let check = document.getElementById('correct-wrong')
 let scoresPage = document.getElementById('highscore-page')
 let viewScores = document.getElementById('view-scores')
 let questionIndex = 0
 let points = 0
 let submitScore = document.getElementById('submit-score')
-let initials =  document.getElementById('name')
+let initials = document.getElementById('name')
 let clear = document.getElementById('clearscores')
 let back = document.getElementById('go-back')
 let topList = document.getElementById('list')
@@ -66,13 +66,13 @@ let questions = [
 
 //* event listener for start button
 
-startButton.addEventListener("click", function() {
-//* setting main pages display to none to see only quiz page
+startButton.addEventListener("click", function () {
+    //* setting main pages display to none to see only quiz page
     mainPage.style.display = "none"
     quizPage.style.display = "flex"
     countdown();
     showQuestion();
-} )
+})
 
 //* setting timer
 
@@ -80,23 +80,23 @@ let timeLeft = 40;
 function countdown() {
 
     const timeInterval = setInterval(function () {
-    timeLeft--;
-    timerEl.textContent = "Time: " + timeLeft;
-        
-    if (timeLeft <= 0) {
-        
-        clearInterval(timeInterval);
-        timerEl.textContent = "Time: 0"
-        scorePage()
-        
-    }
+        timeLeft--;
+        timerEl.textContent = "Time: " + timeLeft;
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timeInterval);
+            timerEl.textContent = "Time: 0"
+            scorePage()
+
+        }
     }, 1000);
 }
 
 
 //* function to show each question
 
-function showQuestion () {
+function showQuestion() {
     questionEl.textContent = questions[questionIndex].question
     answerBtn1.textContent = questions[questionIndex].choices[0];
     answerBtn2.textContent = questions[questionIndex].choices[1];
@@ -107,27 +107,27 @@ function showQuestion () {
 //* question one after each, adding points, reducing time and checking questions if correct
 
 function checkAnswer(event) {
-    
-    if (event.target.matches("button") ) 
-    
-    {  
-    if (questions[questionIndex].correct === event.target.textContent) {
-        check.textContent = "that's right!";
-        points = points +6;
 
-    } else {timeLeft = timeLeft -7; 
-        check.textContent = "Wrong! correct answer is " + questions[questionIndex].correct}
-    
-    
-        showQuestion(questionIndex++); 
-        
-        if (questionIndex +1 == questions.length) {
-            
+    if (event.target.matches("button")) {
+        if (questions[questionIndex].correct === event.target.textContent) {
+            check.textContent = "that's right!";
+            points = points + 6;
+
+        } else {
+            timeLeft = timeLeft - 7;
+            check.textContent = "Wrong! correct answer is " + questions[questionIndex].correct
+        }
+
+
+        showQuestion(questionIndex++);
+
+        if (questionIndex + 1 == questions.length) {
+
             scorePage();
             timeLeft = 0
-        } 
-}   
-} 
+        }
+    }
+}
 
 answerButtons.addEventListener("click", checkAnswer);
 
@@ -135,79 +135,105 @@ answerButtons.addEventListener("click", checkAnswer);
 //* end-page
 
 function scorePage() {
-    
+
 
     mainPage.style.display = "none"
     quizPage.style.display = "none"
     quizEnd.style.display = "flex"
-    quizEnd.children[0].textContent = 'Your final score is: ' + points   
+    quizEnd.children[0].textContent = 'Your final score is: ' + points
 }
 
 
 
 //* function for submit button
 
-submitScore.addEventListener("click", function() {
+submitScore.addEventListener("click", function () {
+    let highScores = []
     if (initials.value === "") {
-        alert("please enter your name") 
-        return 
+        alert("please enter your name")
+        return
     } else {
-        let highScores = {
-        initials: initials.value,
-        score: points}
-    
+        highScores = JSON.parse(localStorage.getItem("highscores"))
+        if (highScores !== null) {
+
+            let newScore = {
+                initials: initials.value,
+                score: points
+            }
+            highScores.push(newScore)
+        } else {
+            highScores = [
+                {
+                    initials: initials.value,
+                    score: points
+                }
+            ]
+        }
+
+    }
+
     //* saving information on local storage
-    
-    localStorage.setItem("highScores", JSON.stringify(highScores))    
-    topScoresPage() } 
-    
-    
-} )
+
+    localStorage.setItem("highScores", JSON.stringify(highScores))
+    topScoresPage()
+}
 
 
-function topScoresPage()  {
-    
+)
+
+
+function topScoresPage() {
+
     quizEnd.style.display = "none"
-    scoresPage.style.display = "flex" 
-    //*take information from local storage
-    
+    scoresPage.style.display = "flex"
+    //*grab information from local storage
+    addList()
 
-    let finalScoreList = JSON.parse(localStorage.getItem("highScores"))
-    
+
+}
+
+
+function addList() {
+
+    let finalScore = JSON.parse(localStorage.getItem("highScores"))
+
 
     //* creating list to hold information and show on the page
-    
-    
-    let li = document.createElement ("li")
-    li.textContent = finalScoreList.initials + " - " + finalScoreList.score + "points"
-
-    //* adding to parent element
 
 
-    topList.appendChild(li); 
-} 
+
+    if (finalScore !== null) {
+        for (let i = 0; i < finalScore.length; i++) {
+            let list = document.createElement("li")
+            list.textContent = finalScore[i].initials + " - " + finalScore[i].score + "points"
+            //* adding to parent element
+            topList.appendChild(list);
+            console.log(finalScore)
+            console.log(finalScore.length)
+        }
+    }
+    else {
+        topList.innerHTML = ""
+    }
+}
 
 
-    
 
-
-    
-    
-
-viewScores.addEventListener("click", function()  {
+viewScores.addEventListener("click", function () {
     mainPage.style.display = "none"
     quizPage.style.display = "none"
     quizEnd.style.display = "none"
     scoresPage.style.display = "flex"
-} )
+})
 
 clear.addEventListener("click", function () {
     localStorage.clear();
     //* location.reload();
+    topScoresPage()
 });
 
-back.addEventListener("click", function() {
-    window.location.reload() } )
-    
+back.addEventListener("click", function () {
+    location.reload()
+})
 
-    
+
